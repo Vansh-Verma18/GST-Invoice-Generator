@@ -113,134 +113,144 @@ export default function Generator() {
     const finalInvoiceDate = invoiceDate
     const doc = new jsPDF()
     
-    // PROFESSIONAL COLOR PALETTE
-    const navy = [30, 41, 59]           // Headings
-    const purple = [139, 92, 246]       // Accents
-    const blue = [59, 130, 246]         // Highlights
-    const darkGray = [71, 85, 105]      // Body text
-    const lightGray = [148, 163, 184]   // Labels
-    const borderGray = [226, 232, 240]  // Borders
-    const bgGray = [248, 250, 252]      // Backgrounds
+    // PREMIUM COLOR PALETTE
+    const purple = [139, 92, 246]
+    const navy = [30, 41, 59]
+    const darkText = [51, 65, 85]
+    const grayText = [100, 116, 139]
+    const lightGray = [148, 163, 184]
+    const borderLight = [226, 232, 240]
+    const bgLight = [248, 250, 252]
     
-    // WHITE BACKGROUND
+    // PAGE SETUP
+    const pageWidth = 210
+    const pageHeight = 297
+    const margin = 20
+    const contentWidth = pageWidth - (margin * 2)
+    
+    // BACKGROUND - Clean White
     doc.setFillColor(255, 255, 255)
-    doc.rect(0, 0, 210, 297, 'F')
+    doc.rect(0, 0, pageWidth, pageHeight, 'F')
     
-    // ============================================
-    // TOP SECTION - Compact Header
-    // ============================================
-    const margin = 15
+    // ===================================
+    // HEADER SECTION
+    // ===================================
+    let currentY = margin
     
-    // LEFT: INVOXA Logo & Tagline
-    doc.setFontSize(20)
+    // Logo - Left
+    doc.setFontSize(24)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(purple[0], purple[1], purple[2])
-    doc.text('INVOXA', margin, 20)
-    
-    doc.setFontSize(8)
-    doc.setFont('helvetica', 'normal')
-    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('Smart GST Invoice Platform', margin, 26)
-    
-    // RIGHT: Invoice Details (Compact)
-    const rightX = 195
-    
-    // Compact Status Badge
-    doc.setFillColor(purple[0], purple[1], purple[2])
-    doc.roundedRect(rightX - 28, 14, 28, 6, 1, 1, 'F')
-    doc.setFontSize(7)
-    doc.setFont('helvetica', 'bold')
-    doc.setTextColor(255, 255, 255)
-    doc.text('INVOICE', rightX - 14, 18, { align: 'center' })
-    
-    // Invoice Number
-    doc.setFontSize(8)
-    doc.setFont('helvetica', 'normal')
-    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('Invoice Number', rightX, 26, { align: 'right' })
-    
-    doc.setFontSize(10)
-    doc.setFont('helvetica', 'bold')
-    doc.setTextColor(navy[0], navy[1], navy[2])
-    doc.text(finalInvoiceNumber, rightX, 32, { align: 'right' })
-    
-    // Issue Date
-    doc.setFontSize(8)
-    doc.setFont('helvetica', 'normal')
-    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('Issue Date', rightX, 38, { align: 'right' })
+    doc.text('INVOXA', margin, currentY)
     
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text(finalInvoiceDate, rightX, 43, { align: 'right' })
+    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
+    doc.text('Smart GST Invoice Platform', margin, currentY + 5)
     
-    // ============================================
-    // CUSTOMER SECTION - Single Row Cards
-    // ============================================
-    const cardY = 52
-    const cardWidth = 88
-    const cardHeight = 28
+    // Status Badge - Top Right
+    const badgeWidth = 30
+    const badgeHeight = 8
+    const badgeX = pageWidth - margin - badgeWidth
+    doc.setFillColor(purple[0], purple[1], purple[2])
+    doc.roundedRect(badgeX, currentY - 4, badgeWidth, badgeHeight, 2, 2, 'F')
+    doc.setFontSize(9)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(255, 255, 255)
+    doc.text('INVOICE', badgeX + badgeWidth/2, currentY + 1, { align: 'center' })
     
-    // FROM Card
-    doc.setFillColor(bgGray[0], bgGray[1], bgGray[2])
-    doc.roundedRect(margin, cardY, cardWidth, cardHeight, 2, 2, 'F')
-    doc.setDrawColor(borderGray[0], borderGray[1], borderGray[2])
-    doc.setLineWidth(0.3)
-    doc.roundedRect(margin, cardY, cardWidth, cardHeight, 2, 2, 'S')
+    // Invoice Details - Right
+    currentY += 10
+    doc.setFontSize(8)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text('Invoice Number', pageWidth - margin, currentY, { align: 'right' })
+    
+    currentY += 4
+    doc.setFontSize(11)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(navy[0], navy[1], navy[2])
+    doc.text(finalInvoiceNumber, pageWidth - margin, currentY, { align: 'right' })
+    
+    currentY += 6
+    doc.setFontSize(8)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text('Issue Date', pageWidth - margin, currentY, { align: 'right' })
+    
+    currentY += 4
+    doc.setFontSize(9)
+    doc.setTextColor(darkText[0], darkText[1], darkText[2])
+    doc.text(finalInvoiceDate, pageWidth - margin, currentY, { align: 'right' })
+    
+    // ===================================
+    // CUSTOMER SECTION
+    // ===================================
+    currentY = 50
+    const cardWidth = (contentWidth - 8) / 2
+    const cardHeight = 32
+    
+    // FROM Card - Enhanced
+    doc.setFillColor(bgLight[0], bgLight[1], bgLight[2])
+    doc.roundedRect(margin, currentY, cardWidth, cardHeight, 3, 3, 'F')
+    doc.setDrawColor(borderLight[0], borderLight[1], borderLight[2])
+    doc.setLineWidth(0.5)
+    doc.roundedRect(margin, currentY, cardWidth, cardHeight, 3, 3, 'S')
     
     doc.setFontSize(7)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('FROM', margin + 4, cardY + 5)
+    doc.text('FROM', margin + 5, currentY + 6)
     
-    doc.setFontSize(11)
+    doc.setFontSize(12)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(navy[0], navy[1], navy[2])
-    doc.text(businessName, margin + 4, cardY + 11)
+    const fromName = doc.splitTextToSize(businessName, cardWidth - 10)
+    doc.text(fromName[0], margin + 5, currentY + 12)
     
     doc.setFontSize(8)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text(`GSTIN: ${businessGstin}`, margin + 4, cardY + 16)
+    doc.setTextColor(darkText[0], darkText[1], darkText[2])
+    doc.text(`GSTIN: ${businessGstin}`, margin + 5, currentY + 18)
     
-    const businessAddr = doc.splitTextToSize(businessAddress, cardWidth - 8)
-    doc.setFontSize(7)
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text(businessAddr.slice(0, 2), margin + 4, cardY + 21)
+    const fromAddr = doc.splitTextToSize(businessAddress, cardWidth - 10)
+    doc.setFontSize(8)
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text(fromAddr.slice(0, 2), margin + 5, currentY + 23)
     
-    // BILL TO Card
-    const rightCardX = margin + cardWidth + 6
-    doc.setFillColor(bgGray[0], bgGray[1], bgGray[2])
-    doc.roundedRect(rightCardX, cardY, cardWidth, cardHeight, 2, 2, 'F')
-    doc.setDrawColor(borderGray[0], borderGray[1], borderGray[2])
-    doc.setLineWidth(0.3)
-    doc.roundedRect(rightCardX, cardY, cardWidth, cardHeight, 2, 2, 'S')
+    // BILL TO Card - Enhanced
+    const toX = margin + cardWidth + 8
+    doc.setFillColor(bgLight[0], bgLight[1], bgLight[2])
+    doc.roundedRect(toX, currentY, cardWidth, cardHeight, 3, 3, 'F')
+    doc.setDrawColor(borderLight[0], borderLight[1], borderLight[2])
+    doc.setLineWidth(0.5)
+    doc.roundedRect(toX, currentY, cardWidth, cardHeight, 3, 3, 'S')
     
     doc.setFontSize(7)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('BILL TO', rightCardX + 4, cardY + 5)
+    doc.text('BILL TO', toX + 5, currentY + 6)
     
-    doc.setFontSize(11)
+    doc.setFontSize(12)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(navy[0], navy[1], navy[2])
-    doc.text(customerName, rightCardX + 4, cardY + 11)
+    const toName = doc.splitTextToSize(customerName, cardWidth - 10)
+    doc.text(toName[0], toX + 5, currentY + 12)
     
     doc.setFontSize(8)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text(`GSTIN: ${customerGstin || 'N/A'}`, rightCardX + 4, cardY + 16)
+    doc.setTextColor(darkText[0], darkText[1], darkText[2])
+    doc.text(`GSTIN: ${customerGstin || 'N/A'}`, toX + 5, currentY + 18)
     
-    const customerAddr = doc.splitTextToSize(customerAddress, cardWidth - 8)
-    doc.setFontSize(7)
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text(customerAddr.slice(0, 2), rightCardX + 4, cardY + 21)
+    const toAddr = doc.splitTextToSize(customerAddress, cardWidth - 10)
+    doc.setFontSize(8)
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text(toAddr.slice(0, 2), toX + 5, currentY + 23)
     
-    // ============================================
-    // TABLE - Professional & Wide
-    // ============================================
-    const tableStartY = 88
+    // ===================================
+    // PROFESSIONAL TABLE
+    // ===================================
+    currentY = 90
     const tableData = products.map(p => [
       p.description,
       p.quantity.toString(),
@@ -252,7 +262,7 @@ export default function Generator() {
     ])
     
     ;(doc as any).autoTable({
-      startY: tableStartY,
+      startY: currentY,
       head: [['Description', 'Qty', 'Rate', 'GST', 'CGST', 'SGST', 'Total']],
       body: tableData,
       theme: 'plain',
@@ -263,108 +273,113 @@ export default function Generator() {
         fontSize: 9,
         fontStyle: 'bold',
         halign: 'left',
-        cellPadding: { top: 4, bottom: 4, left: 3, right: 3 }
+        cellPadding: { top: 5, bottom: 5, left: 4, right: 4 }
       },
       bodyStyles: {
         fontSize: 9,
-        textColor: [71, 85, 105],
-        cellPadding: { top: 5, bottom: 5, left: 3, right: 3 }
+        textColor: [51, 65, 85],
+        cellPadding: { top: 6, bottom: 6, left: 4, right: 4 },
+        lineColor: [226, 232, 240],
+        lineWidth: 0.3
       },
       alternateRowStyles: {
         fillColor: [248, 250, 252]
       },
       columnStyles: {
-        0: { cellWidth: 70, halign: 'left' },
-        1: { cellWidth: 15, halign: 'center' },
-        2: { cellWidth: 23, halign: 'right' },
-        3: { cellWidth: 15, halign: 'center' },
-        4: { cellWidth: 20, halign: 'right' },
-        5: { cellWidth: 20, halign: 'right' },
-        6: { cellWidth: 27, halign: 'right', fontStyle: 'bold', textColor: [30, 41, 59] }
-      },
-      styles: {
-        lineColor: [226, 232, 240],
-        lineWidth: 0.3
+        0: { cellWidth: 65, halign: 'left' },
+        1: { cellWidth: 18, halign: 'center' },
+        2: { cellWidth: 25, halign: 'right' },
+        3: { cellWidth: 18, halign: 'center' },
+        4: { cellWidth: 23, halign: 'right' },
+        5: { cellWidth: 23, halign: 'right' },
+        6: { cellWidth: 28, halign: 'right', fontStyle: 'bold', textColor: [30, 41, 59] }
       }
     })
     
-    // ============================================
-    // SUMMARY - Directly Under Table
-    // ============================================
-    const summaryY = (doc as any).lastAutoTable.finalY + 8
-    const summaryX = 195 - 70
-    const summaryWidth = 70
+    // ===================================
+    // PREMIUM SUMMARY CARD
+    // ===================================
+    currentY = (doc as any).lastAutoTable.finalY + 10
+    const summaryWidth = 75
+    const summaryX = pageWidth - margin - summaryWidth
+    const summaryHeight = 45
     
-    // Summary Box
-    doc.setFillColor(bgGray[0], bgGray[1], bgGray[2])
-    doc.roundedRect(summaryX, summaryY, summaryWidth, 38, 2, 2, 'F')
-    doc.setDrawColor(borderGray[0], borderGray[1], borderGray[2])
-    doc.setLineWidth(0.3)
-    doc.roundedRect(summaryX, summaryY, summaryWidth, 38, 2, 2, 'S')
+    // Shadow effect
+    doc.setFillColor(226, 232, 240)
+    doc.roundedRect(summaryX + 1, currentY + 1, summaryWidth, summaryHeight, 3, 3, 'F')
     
-    let sumY = summaryY + 6
+    // Main card
+    doc.setFillColor(255, 255, 255)
+    doc.roundedRect(summaryX, currentY, summaryWidth, summaryHeight, 3, 3, 'F')
+    doc.setDrawColor(borderLight[0], borderLight[1], borderLight[2])
+    doc.setLineWidth(0.5)
+    doc.roundedRect(summaryX, currentY, summaryWidth, summaryHeight, 3, 3, 'S')
+    
+    let sumY = currentY + 8
     
     // Subtotal
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2])
-    doc.text('Subtotal', summaryX + 4, sumY)
-    doc.text(`₹${calculateSubtotal().toFixed(2)}`, summaryX + summaryWidth - 4, sumY, { align: 'right' })
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text('Subtotal', summaryX + 5, sumY)
+    doc.text(`₹${calculateSubtotal().toFixed(2)}`, summaryX + summaryWidth - 5, sumY, { align: 'right' })
     
     sumY += 6
-    // CGST
-    doc.text('CGST', summaryX + 4, sumY)
-    doc.text(`₹${calculateTotalCGST().toFixed(2)}`, summaryX + summaryWidth - 4, sumY, { align: 'right' })
+    doc.text('CGST', summaryX + 5, sumY)
+    doc.text(`₹${calculateTotalCGST().toFixed(2)}`, summaryX + summaryWidth - 5, sumY, { align: 'right' })
     
     sumY += 6
-    // SGST
-    doc.text('SGST', summaryX + 4, sumY)
-    doc.text(`₹${calculateTotalSGST().toFixed(2)}`, summaryX + summaryWidth - 4, sumY, { align: 'right' })
+    doc.text('SGST', summaryX + 5, sumY)
+    doc.text(`₹${calculateTotalSGST().toFixed(2)}`, summaryX + summaryWidth - 5, sumY, { align: 'right' })
     
-    sumY += 5
     // Divider
-    doc.setDrawColor(borderGray[0], borderGray[1], borderGray[2])
-    doc.setLineWidth(0.5)
-    doc.line(summaryX + 4, sumY, summaryX + summaryWidth - 4, sumY)
+    sumY += 5
+    doc.setDrawColor(purple[0], purple[1], purple[2])
+    doc.setLineWidth(1)
+    doc.line(summaryX + 5, sumY, summaryX + summaryWidth - 5, sumY)
     
-    sumY += 7
     // GRAND TOTAL - Most Prominent
-    doc.setFontSize(11)
+    sumY += 8
+    doc.setFillColor(purple[0], purple[1], purple[2])
+    doc.roundedRect(summaryX + 5, sumY - 6, summaryWidth - 10, 12, 2, 2, 'F')
+    
+    doc.setFontSize(10)
     doc.setFont('helvetica', 'bold')
-    doc.setTextColor(purple[0], purple[1], purple[2])
-    doc.text('GRAND TOTAL', summaryX + 4, sumY)
+    doc.setTextColor(255, 255, 255)
+    doc.text('GRAND TOTAL', summaryX + 8, sumY)
     
-    doc.setFontSize(14)
+    doc.setFontSize(16)
     doc.setFont('helvetica', 'bold')
-    doc.setTextColor(navy[0], navy[1], navy[2])
-    doc.text(`₹${calculateGrandTotal().toFixed(2)}`, summaryX + summaryWidth - 4, sumY, { align: 'right' })
+    doc.text(`₹${calculateGrandTotal().toFixed(2)}`, summaryX + summaryWidth - 8, sumY, { align: 'right' })
     
-    // ============================================
-    // FOOTER - Professional
-    // ============================================
-    const footerY = 275
+    // ===================================
+    // PROFESSIONAL FOOTER
+    // ===================================
+    const footerY = 270
     
-    // Divider line
-    doc.setDrawColor(borderGray[0], borderGray[1], borderGray[2])
-    doc.setLineWidth(0.3)
-    doc.line(margin, footerY, 195, footerY)
+    // Top border
+    doc.setDrawColor(borderLight[0], borderLight[1], borderLight[2])
+    doc.setLineWidth(0.5)
+    doc.line(margin, footerY, pageWidth - margin, footerY)
     
-    // Footer text
-    doc.setFontSize(8)
+    // Footer content
+    doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
-    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
-    doc.text('Generated by INVOXA', margin, footerY + 5)
+    doc.setTextColor(darkText[0], darkText[1], darkText[2])
+    doc.text('Generated by INVOXA', margin, footerY + 6)
     
-    doc.setFontSize(7)
-    doc.text('Professional GST Invoice Generator', margin, footerY + 9)
+    doc.setFontSize(8)
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text('Professional GST Invoice Generator', margin, footerY + 11)
     
-    doc.setTextColor(blue[0], blue[1], blue[2])
-    doc.text('Support: support@invoxa.app', margin, footerY + 13)
+    doc.setFontSize(8)
+    doc.setTextColor(purple[0], purple[1], purple[2])
+    doc.text('Support: support@invoxa.app', margin, footerY + 16)
     
     // Right side
-    doc.setTextColor(lightGray[0], lightGray[1], lightGray[2])
     doc.setFontSize(7)
-    doc.text('Built for Digital Heroes', 195, footerY + 9, { align: 'right' })
+    doc.setTextColor(grayText[0], grayText[1], grayText[2])
+    doc.text('Built for Digital Heroes', pageWidth - margin, footerY + 11, { align: 'right' })
     
     doc.save(`Invoice_${finalInvoiceNumber}.pdf`)
   }
