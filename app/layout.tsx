@@ -50,9 +50,6 @@ export default function RootLayout({
                 <Link href="/generator" className="text-sm text-white/70 hover:text-white transition-colors">
                   Generator
                 </Link>
-                <Link href="/preview" className="text-sm text-white/70 hover:text-white transition-colors">
-                  Preview
-                </Link>
                 <Link href="/about" className="text-sm text-white/70 hover:text-white transition-colors">
                   About
                 </Link>
