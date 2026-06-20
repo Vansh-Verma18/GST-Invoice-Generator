@@ -90,10 +90,9 @@ This project is deployed on Vercel's free tier:
 ## Developer
 
 **Name**: Vansh Sharma  
-**Email**: vanshsharma@example.com (Replace with your actual email)  
+**Email**: vanshverma531@gmail.com  
+**GitHub**: https://github.com/Vansh-Verma18  
 **Built for**: [Digital Heroes](https://digitalheroesco.com)
-
-> **Note**: Before deploying, replace `vanshsharma@example.com` with your real email address and update the GitHub username in links.
 
 ## License
 
@@ -105,4 +104,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
-For questions or issues, please contact: vanshsharma@example.com
+For questions or issues, please contact: vanshverma531@gmail.com
