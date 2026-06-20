@@ -68,9 +68,45 @@ export default function Generator() {
   const calculateGrandTotal = () => calculateSubtotal() + calculateTotalCGST() + calculateTotalSGST()
 
   const generatePDF = () => {
-    if (!businessName || !businessGstin || !businessAddress || !customerName || !customerAddress || products.some(p => !p.description || p.quantity <= 0 || p.rate <= 0)) {
-      alert('Please fill in all required fields')
+    // Validate required business fields
+    if (!businessName.trim()) {
+      alert('Please enter Business Name')
       return
+    }
+    if (!businessGstin.trim()) {
+      alert('Please enter Business GSTIN')
+      return
+    }
+    if (!businessAddress.trim()) {
+      alert('Please enter Business Address')
+      return
+    }
+    
+    // Validate required customer fields
+    if (!customerName.trim()) {
+      alert('Please enter Customer Name')
+      return
+    }
+    if (!customerAddress.trim()) {
+      alert('Please enter Customer Address')
+      return
+    }
+    
+    // Validate products
+    for (let i = 0; i < products.length; i++) {
+      const p = products[i]
+      if (!p.description.trim()) {
+        alert(`Please enter description for item ${i + 1}`)
+        return
+      }
+      if (p.quantity <= 0) {
+        alert(`Please enter a valid quantity for item ${i + 1}`)
+        return
+      }
+      if (p.rate <= 0) {
+        alert(`Please enter a valid rate for item ${i + 1}`)
+        return
+      }
     }
     
     const finalInvoiceNumber = invoiceNumber || `INV-${Date.now()}`
