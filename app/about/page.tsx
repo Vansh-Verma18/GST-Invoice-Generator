@@ -103,7 +103,7 @@ export default function About() {
       <div className="glass-card p-8 bg-gradient-to-br from-purple-500/10 to-blue-500/10">
         <h2 className="text-2xl font-bold mb-4">Developer Information</h2>
         <div className="space-y-2 text-lg">
-          <p><strong className="text-purple-400">Name:</strong> Vansh Sharma</p>
+          <p><strong className="text-purple-400">Name:</strong> Vansh Verma</p>
           <p><strong className="text-purple-400">Email:</strong> <a href="mailto:vanshverma531@gmail.com" className="text-blue-400 hover:text-blue-300">vanshverma531@gmail.com</a></p>
           <p><strong className="text-purple-400">GitHub:</strong> <a href="https://github.com/Vansh-Verma18" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">github.com/Vansh-Verma18</a></p>
         </div>

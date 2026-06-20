@@ -142,7 +142,7 @@ export default function RootLayout({
             {/* Bottom Bar */}
             <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm text-white/40">
-                Built by <span className="text-white/60 font-medium">Vansh Sharma</span> • <a href="mailto:vanshverma531@gmail.com" className="text-purple-400/60 hover:text-purple-400">vanshverma531@gmail.com</a>
+                Built by <span className="text-white/60 font-medium">Vansh Verma</span> • <a href="mailto:vanshverma531@gmail.com" className="text-purple-400/60 hover:text-purple-400">vanshverma531@gmail.com</a>
               </p>
               <a 
                 href="https://digitalheroesco.com" 

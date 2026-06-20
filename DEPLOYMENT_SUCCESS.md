@@ -110,7 +110,7 @@ https://github.com/Vansh-Verma18/GST-Invoice-Generator
 
 ## Built For
 **Digital Heroes Trial Task**
-- Developer: Vansh Sharma
+- Developer: Vansh Verma
 - Email: vanshverma531@gmail.com
 - GitHub: https://github.com/Vansh-Verma18
 - Company: https://digitalheroesco.com

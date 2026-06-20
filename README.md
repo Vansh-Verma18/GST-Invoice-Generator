@@ -89,7 +89,7 @@ This project is deployed on Vercel's free tier:
 
 ## Developer
 
-**Name**: Vansh Sharma  
+**Name**: Vansh Verma  
 **Email**: vanshverma531@gmail.com  
 **GitHub**: https://github.com/Vansh-Verma18  
 **Built for**: [Digital Heroes](https://digitalheroesco.com)
